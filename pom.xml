@@ -1,0 +1,105 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.tw.cucumberTest</groupId>
+    <artifactId>cucumber-test</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>cucumber-test</name>
+    <url>http://maven.apache.org</url>
+
+    <repositories>
+        <repository>
+            <id>codehaus</id>
+            <url>http://repository.codehaus.org</url>
+        </repository>
+        <repository>
+            <id>cukes</id>
+            <url>http://cukes.info/maven</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>cukes</id>
+            <url>http://cukes.info/maven</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>apache.snapshots</id>
+            <url>http://repository.apache.org/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <properties>
+        <cuke4duke.version>0.4.4</cuke4duke.version>
+        <spring.version>3.0.5.RELEASE</spring.version>
+        <selenium.version>2.0b3</selenium.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cuke4duke</groupId>
+            <artifactId>cuke4duke</artifactId>
+            <version>${cuke4duke.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-firefox-driver</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.0.2</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                        <source>1.5</source>
+                        <target>1.5</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>cuke4duke</groupId>
+                <artifactId>cuke4duke-maven-plugin</artifactId>
+                <version>${cuke4duke.version}</version>
+                <configuration>
+                    <jvmArgs>
+                        <jvmArg>-Xmx384m</jvmArg>
+                        <jvmArg>-Dcuke4duke.objectFactory=cuke4duke.internal.jvmclass.SpringFactory</jvmArg>
+                        <!--<jvmArg>-Xdebug</jvmArg>-->
+                        <!--<jvmArg>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005</jvmArg>-->
+                    </jvmArgs>
+                    <cucumberArgs>
+                        <cucumberArg>--require</cucumberArg>
+                        <cucumberArg>${basedir}/target/test-classes</cucumberArg>
+                    </cucumberArgs>
+                    <gems>
+                        <gem>install cuke4duke --version ${cuke4duke.version}</gem>
+                    </gems>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>run-features</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>cucumber</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
