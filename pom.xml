@@ -78,7 +78,9 @@
                 <configuration>
                     <jvmArgs>
                         <jvmArg>-Xmx384m</jvmArg>
-                        <jvmArg>-Dcuke4duke.objectFactory=cuke4duke.internal.jvmclass.SpringFactory</jvmArg>
+                        <!--I found the applicationContext.refresh() in createObjects cause a memory leak, so
+                        I created a MySpringFactory-->
+                        <jvmArg>-Dcuke4duke.objectFactory=com.tw.cucumberTest.MySpringFactory</jvmArg>
                         <!--<jvmArg>-Xdebug</jvmArg>-->
                         <!--<jvmArg>-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005</jvmArg>-->
                     </jvmArgs>
